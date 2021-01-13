@@ -1,11 +1,12 @@
 import React from 'react'
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import {Provider} from 'react-redux'
-import {Container} from "react-bootstrap"
-import {store} from './components/lib/store'
+import {store} from './components/redux-components/lib/store'
 import {Header} from "./components/Header";
 import {DropZone} from "./components/DropZone";
 import TableComponent from "./components/TableComponent";
+import RegisterPage from "./components/pages/RegisterPage";
+import LoginPage from "./components/pages/LoginPage";
 import "./bootstrap.min.css"
 
 
@@ -13,15 +14,13 @@ function App() {
     return (
         <Router>
             <Provider store={store}>
-                <>
                     <Header/>
-                    <Container>
                         <Switch>
-                            <Route exact path="/" component={DropZone}/>
-                            <Route exact path="/table" component={TableComponent}/>
+                            <Route path="/" component={DropZone} exact/>
+                            <Route path="/table" component={TableComponent} exact/>
+                            <Route path="/register" component={RegisterPage} exact />
+                            <Route path="/login" component={LoginPage} exact />
                         </Switch>
-                    </Container>
-                </>
             </Provider>
         </Router>
     );

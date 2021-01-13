@@ -4,7 +4,7 @@ import thunk from "redux-thunk";
 import { logger } from '../utils/logger'
 import { dataReducer } from '../../common/reducer'
 import {composeWithDevTools} from "redux-devtools-extension";
-import {loadTableReducer} from "../../redux-components/reducers/loadTableReducer";
+import {loadTableReducer} from "../../reducers/loadTableReducer";
 
 const rootReducer = combineReducers({
   data: dataReducer,
