@@ -1,7 +1,7 @@
 import React from 'react'
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import {Provider} from 'react-redux'
-import {store} from './components/redux-components/lib/store'
+import {store} from './components/redux-base-logic/lib/store'
 import {Header} from "./components/Header";
 import {DropZone} from "./components/DropZone";
 import TableComponent from "./components/TableComponent";

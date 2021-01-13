@@ -1,10 +1,10 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
 import XLSX from 'xlsx'
 import {useDispatch, useSelector} from 'react-redux'
 import {UploadInput} from "./UploadInput";
-import {setColumns, setData, setFileName} from "./redux-components/common/actions";
-import {makeColumns} from "./redux-components/lib/utils";
+import {setColumns, setData, setFileName} from "./redux-base-logic/common/actions";
+import {makeColumns} from "./redux-base-logic/lib/utils";
 import {Container} from "react-bootstrap";
 
 const UploadWrapper = styled.div`
@@ -29,7 +29,7 @@ const SuccessTitle = styled.h3`
   color: #5a5a5a;
 `
 
-export const DropZone = () => {
+export const DropZone = ({ history }) => {
     const [isDragging, setIsDragging] = useState(false)
     const fileName = useSelector(state => state.data.fileName)
     const dispatch = useDispatch()
@@ -94,6 +94,14 @@ export const DropZone = () => {
         }
         if (rABS) reader.readAsBinaryString(file); else reader.readAsArrayBuffer(file);
     }
+    const userLogin = useSelector(state => state.userLogin)
+    const {userInfo} = userLogin
+
+    useEffect(() => {
+        if(!userInfo) {
+            history.push('/login')
+        }
+    }, [userInfo])
 
     return (
         <Container>
