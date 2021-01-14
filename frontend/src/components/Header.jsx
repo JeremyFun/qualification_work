@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {LinkContainer} from 'react-router-bootstrap'
 import {Nav, Navbar, NavDropdown} from "react-bootstrap"
 import {logout} from "./redux-components/actions/userActions";
+import {useHistory} from "react-router";
 
 
 export const Header = () => {
@@ -29,7 +30,6 @@ export const Header = () => {
     const logoutHandler = () => {
         dispatch(logout())
     }
-
     return (
         <Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
             <Navbar.Brand href="/">K№21<i className="fas fa-graduation-cap"></i>
@@ -52,24 +52,21 @@ export const Header = () => {
                         <Nav.Link onClick={exportFile}>
                             Експортировать таблицу <i className="fas fa-file-export"></i>
                         </Nav.Link>
-                        <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-                            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                            <NavDropdown.Divider/>
-                            <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-                        </NavDropdown>
                     </> : ""}
                 </Nav>
                 <Nav>
-                    {userInfo ? <Nav.Link onClick={logoutHandler}>
-                            Вихід <i className="fas fa-sign-out-alt"></i>
-                        </Nav.Link>
-                        : (<LinkContainer to='/login'>
-                                <Nav.Link>
-                                    ВХІД  <i className="fas fa-sign-in-alt"></i>
-                                </Nav.Link>
-                            </LinkContainer>)}
+                    <NavDropdown title={userInfo.name}>
+                        <LinkContainer to='/profile'><NavDropdown.Item>Profile</NavDropdown.Item></LinkContainer>
+                        <NavDropdown.Divider/>
+                        <NavDropdown.Item onClick={logoutHandler}>Вихід <i
+                            className="fas fa-sign-out-alt"></i></NavDropdown.Item>
+                    </NavDropdown>
+                    {!userInfo && (
+                        <LinkContainer to='/login'>
+                            <Nav.Link>
+                                ВХІД <i className="fas fa-sign-in-alt"></i>
+                            </Nav.Link>
+                        </LinkContainer>)}
                 </Nav>
             </Navbar.Collapse>
         </Navbar>

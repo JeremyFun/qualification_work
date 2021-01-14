@@ -76,21 +76,6 @@ export const DropZone = ({ history }) => {
             dispatch(setData(data))
             dispatch(setColumns(makeColumns(ws['!ref'])))
             dispatch(setFileName(file.name))
-            const dataObject = []
-            // if (data.length > 0) {
-            //     data.map(el => {
-            //         if (el.length > 0 && el.length < 85) {
-            //             dataObject.push({...el})
-            //         }
-            //     })
-            // }
-            // if (dataObject.length > 0) {
-            //     try {
-            //         await request(`http://localhost:8080/table`, 'POST', dataObject)
-            //     } catch (e) {
-            //         console.log(e, 'e in TableComponent')
-            //     }
-            // }
         }
         if (rABS) reader.readAsBinaryString(file); else reader.readAsArrayBuffer(file);
     }

@@ -1,4 +1,6 @@
-export const SET_DATA = "SET_DATA"
+export const SET_DATA_REQUEST = "SET_DATA_REQUEST"
+export const SET_DATA_SUCCESS = "SET_DATA_SUCCESS"
+export const SET_DATA_FAIL = "SET_DATA_FAIL"
 export const SET_COLUMNS = "SET_COLUMNS"
 export const SET_FILE_NAME = "SET_FILE_NAME"
 export const CLEAR_DATA = "CLEAR_DATA"

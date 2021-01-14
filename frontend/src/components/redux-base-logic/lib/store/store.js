@@ -11,6 +11,10 @@ const userInfoFromStorage = localStorage.getItem('userInfo')
     ? JSON.parse(localStorage.getItem('userInfo'))
     : null
 
+const dataTableFromStorage = localStorage.getItem('parsedData')
+    ? JSON.parse(localStorage.getItem('parsedData'))
+    : null
+
 const rootReducer = combineReducers({
   data: dataReducer,
   loadTable: loadTableReducer,
@@ -21,7 +25,8 @@ const rootReducer = combineReducers({
 const middleware = [thunk]
 
 const initialState = {
-  userLogin: {userInfo: userInfoFromStorage}
+  userLogin: {userInfo: userInfoFromStorage},
+  data: {parsedData: dataTableFromStorage}
 }
 
 export const store = createStore(rootReducer, initialState, composeWithDevTools(applyMiddleware(logger, ...middleware)))

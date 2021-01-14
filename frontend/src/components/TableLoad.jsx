@@ -1,9 +1,12 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
 import {useTable, usePagination} from 'react-table'
-
-import makeData from './makeData'
-import {dataColumn} from "./data/data";
+import {dataColumn} from "../data/data";
+import {useDispatch, useSelector} from "react-redux";
+import Loader from "./Loader";
+import Message from "./Message";
+import {setDataUpdate} from "./redux-base-logic/common/actions";
+import { Button, Modal } from "react-bootstrap";
 
 const Styles = styled.div`
   padding: 1rem;
@@ -38,6 +41,7 @@ const Styles = styled.div`
       }
     }
   }
+
   .pagination {
     padding: 0.5rem;
     color: slategray;
@@ -63,13 +67,13 @@ const EditableCell = ({
     React.useEffect(() => {
         setValue(initialValue)
     }, [initialValue])
-
     return <input value={value} onChange={onChange} onBlur={onBlur}/>
 }
 
 const defaultColumn = {
     Cell: EditableCell,
 }
+
 function Table({columns, data, updateMyData, skipPageReset}) {
 
     const {
@@ -176,14 +180,20 @@ function Table({columns, data, updateMyData, skipPageReset}) {
     )
 }
 
-function App() {
+const TableLoad = () => {
+    const dispatch = useDispatch()
     const columns = React.useMemo(
         () => dataColumn,
         []
     )
 
-    const [data, setData] = React.useState(() => makeData(20))
+    const {parsedData, loading, error} = useSelector(state => state.data)
+    const [data, setData] = React.useState(() => parsedData)
     const [skipPageReset, setSkipPageReset] = React.useState(false)
+    const [show, setShow] = useState(false)
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     const updateMyData = (rowIndex, columnId, value) => {
         setSkipPageReset(true)
@@ -200,20 +210,50 @@ function App() {
         )
     }
 
-    React.useEffect(() => {
+    const saveDataTable = () => {
+        dispatch(setDataUpdate(data))
+        handleClose()
+    }
+
+    useEffect(() => {
         setSkipPageReset(false)
     }, [data])
-
     return (
         <Styles>
-            <Table
-                columns={columns}
-                data={data}
-                updateMyData={updateMyData}
-                skipPageReset={skipPageReset}
-            />
+            {loading ? <Loader/> : error ? <Message variant="danger">{error}</Message> : parsedData ? (
+                <>
+                    <Table
+                        columns={columns}
+                        data={data}
+                        updateMyData={updateMyData}
+                        skipPageReset={skipPageReset}
+                    />
+                    <Button
+                        variant="secondary"
+                        size="lg"
+                        block
+                        onClick={handleShow}
+                    >
+                        Сохранить
+                    </Button>
+                    <Modal show={show} onHide={handleClose} animation={false}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Бажаю міцного здоров'я!</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>Ви добавили зміни у проект ви згодні зберегти їх?</Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={handleClose}>
+                                Ні
+                            </Button>
+                            <Button variant="primary" onClick={saveDataTable}>
+                                    Так
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>
+                </>
+            ) : <Loader/>}
         </Styles>
     )
 }
 
-export default App
+export default TableLoad
