@@ -8,6 +8,8 @@ import RegisterPage from "./components/pages/RegisterPage";
 import LoginPage from "./components/pages/LoginPage";
 import "./bootstrap.min.css"
 import TableLoad from "./components/TableLoad";
+import ProfilePage from "./components/pages/ProfilePage";
+
 
 
 function App() {
@@ -20,6 +22,7 @@ function App() {
                             <Route path="/table" component={TableLoad} exact/>
                             <Route path="/register" component={RegisterPage} exact />
                             <Route path="/login" component={LoginPage} exact />
+                            <Route path="/profile" component={ProfilePage} exact />
                         </Switch>
             </Provider>
         </Router>

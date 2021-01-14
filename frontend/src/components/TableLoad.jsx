@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import Loader from "./Loader";
 import Message from "./Message";
 import {setDataUpdate} from "./redux-base-logic/common/actions";
-import { Button, Modal } from "react-bootstrap";
+import {Button, Modal} from "react-bootstrap";
 
 const Styles = styled.div`
   padding: 1rem;
@@ -128,32 +128,43 @@ function Table({columns, data, updateMyData, skipPageReset}) {
                 })}
                 </tbody>
             </table>
-            <div className="pagination">
-                <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-                    {'<<'}
-                </button>
-                {' '}
-                <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-                    {'<'}
-                </button>
-                {' '}
-                <button onClick={() => nextPage()} disabled={!canNextPage}>
-                    {'>'}
-                </button>
-                {' '}
-                <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-                    {'>>'}
-                </button>
-                {' '}
-                <span>
-          Page{' '}
+            <div style={{display: "flex", WebkitAlignItems: "center"}}>
+                <div>
+                    <ul className="pagination">
+                        <li className="page-item" onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+                            <a className="page-link" href="#">
+                                <i className="fas fa-angle-double-left"></i>
+                            </a>
+                        </li>
+                        <li className="page-item" onClick={() => previousPage()} disabled={!canPreviousPage}>
+                            <a className="page-link" href="#">
+                                <i className="fas fa-arrow-left"></i>
+                            </a>
+                        </li>
+                        <li className="page-item" onClick={() => nextPage()} disabled={!canNextPage}>
+                            <a className="page-link" href="#">
+                                <i className="fas fa-arrow-right"></i>
+                            </a>
+                        </li>
+                        <li className="page-item">
+                            <a className="page-link" href="#" onClick={() => gotoPage(pageCount - 1)}
+                               disabled={!canNextPage}>
+                                <i className="fas fa-angle-double-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <span className="blockquote">
+          Сторінка{' '}
                     <strong>
-            {pageIndex + 1} of {pageOptions.length}
+            {pageIndex + 1} з {pageOptions.length}
           </strong>{' '}
-        </span>
+                    Перейти на сторінку:{'      '}
+                </span>
+                <div style={{display: "flex", marginTop: "-1.1rem"}}>
                 <span>
-          | Go to page:{' '}
                     <input
+                        className="form-control"
                         type="number"
                         defaultValue={pageIndex + 1}
                         onChange={e => {
@@ -163,18 +174,21 @@ function Table({columns, data, updateMyData, skipPageReset}) {
                         style={{width: '100px'}}
                     />
         </span>{' '}
-                <select
-                    value={pageSize}
-                    onChange={e => {
-                        setPageSize(Number(e.target.value))
-                    }}
-                >
-                    {[10, 20, 30, 40, 50].map(pageSize => (
-                        <option key={pageSize} value={pageSize}>
-                            Show {pageSize}
-                        </option>
-                    ))}
-                </select>
+                    <select
+                        value={pageSize}
+                        onChange={e => {
+                            setPageSize(Number(e.target.value))
+                        }}
+                        style={{width: "14rem"}}
+                        className="form-control"
+                    >
+                        {[10, 20, 40, 60, 80, 100].map(pageSize => (
+                            <option key={pageSize} value={pageSize}>
+                                Переглянути {pageSize} рядків
+                            </option>
+                        ))}
+                    </select>
+                </div>
             </div>
         </>
     )
@@ -233,6 +247,7 @@ const TableLoad = () => {
                         size="lg"
                         block
                         onClick={handleShow}
+                        style={{width: "30rem", marginLeft: "auto", marginRight: "auto"}}
                     >
                         Сохранить
                     </Button>
@@ -246,7 +261,7 @@ const TableLoad = () => {
                                 Ні
                             </Button>
                             <Button variant="primary" onClick={saveDataTable}>
-                                    Так
+                                Так
                             </Button>
                         </Modal.Footer>
                     </Modal>

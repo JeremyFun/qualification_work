@@ -1,6 +1,8 @@
 import * as actions from './constants'
+import axios from "axios";
 
-export const setData = (payload) => (dispatch) => {
+export const setData = (payload) => async (dispatch, getState) => {
+    try {
         dispatch({type: actions.SET_DATA_REQUEST})
         const dataObject = []
         if (payload.length > 0) {
@@ -10,14 +12,48 @@ export const setData = (payload) => (dispatch) => {
                 }
             })
         }
-        localStorage.setItem('parsedData', JSON.stringify(dataObject))
-        dispatch({type: actions.SET_DATA_SUCCESS, payload: dataObject})
+
+        const { userLogin: { userInfo } } = getState()
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${userInfo.token}`
+            }
+        }
+
+        const { data: {success} } = await axios.post('/api/table', dataObject, config)
+        if (success) {
+            localStorage.setItem('parsedData', JSON.stringify(dataObject))
+            dispatch({type: actions.SET_DATA_SUCCESS, payload: dataObject})
+        }
+    } catch (error) {
+        dispatch({
+            type: actions.SET_DATA_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message
+        })
+    }
 }
 
-export const setDataUpdate = (payload) => (dispatch) => {
+export const setDataUpdate = (payload) => async (dispatch, getState) => {
     dispatch({type: actions.SET_DATA_REQUEST})
-    localStorage.setItem('parsedData', JSON.stringify(payload))
-    dispatch({type: actions.SET_DATA_SUCCESS, payload})
+
+    const { userLogin: { userInfo } } = getState()
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${userInfo.token}`
+        }
+    }
+
+    const { data: {success} } = await axios.post('/api/table', payload, config)
+
+    if (success) {
+        localStorage.setItem('parsedData', JSON.stringify(payload))
+        dispatch({type: actions.SET_DATA_SUCCESS, payload})
+    }
 }
 
 export const setColumns = payload => ({type: actions.SET_COLUMNS, payload})
