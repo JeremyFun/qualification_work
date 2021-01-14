@@ -1,10 +1,11 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
 import XLSX from 'xlsx'
 import {useDispatch, useSelector} from 'react-redux'
 import {UploadInput} from "./UploadInput";
-import {setColumns, setData, setFileName} from "./common/actions";
-import {makeColumns} from "./lib/utils";
+import {setColumns, setData, setFileName} from "./redux-base-logic/common/actions";
+import {makeColumns} from "./redux-base-logic/lib/utils";
+import {Container} from "react-bootstrap";
 
 const UploadWrapper = styled.div`
   display: flex;
@@ -28,7 +29,7 @@ const SuccessTitle = styled.h3`
   color: #5a5a5a;
 `
 
-export const DropZone = () => {
+export const DropZone = ({ history }) => {
     const [isDragging, setIsDragging] = useState(false)
     const fileName = useSelector(state => state.data.fileName)
     const dispatch = useDispatch()
@@ -75,35 +76,31 @@ export const DropZone = () => {
             dispatch(setData(data))
             dispatch(setColumns(makeColumns(ws['!ref'])))
             dispatch(setFileName(file.name))
-            const dataObject = []
-            if (data.length > 0) {
-                data.map(el => {
-                    if (el.length > 0 && el.length < 85) {
-                        dataObject.push({...el})
-                    }
-                })
-            }
-            // if (dataObject.length > 0) {
-            //     try {
-            //         await request(`http://localhost:8080/table`, 'POST', dataObject)
-            //     } catch (e) {
-            //         console.log(e, 'e in TableComponent')
-            //     }
-            // }
         }
         if (rABS) reader.readAsBinaryString(file); else reader.readAsArrayBuffer(file);
     }
+    const userLogin = useSelector(state => state.userLogin)
+    const {userInfo} = userLogin
+
+    useEffect(() => {
+        if(!userInfo) {
+            history.push('/login')
+        }
+    }, [userInfo])
 
     return (
-        <UploadWrapper isDragging={isDragging} onDragEnter={handleDragEnter} onDragLeave={handleDragLeave}
-                       onDrop={handleDrop}>
-            <DropZoneTitle>
-                {
-                    fileName ? <SuccessTitle>{fileName} <br/>Успішно завантажено <br/> <strong style={{textDecoration: "underline"}}>натисніть показати
-                        таблицю</strong></SuccessTitle> : 'Перетягніть сюди файл'
-                }
-            </DropZoneTitle>
-            <UploadInput handleFile={handleFile}/>
-        </UploadWrapper>
+        <Container>
+            <UploadWrapper isDragging={isDragging} onDragEnter={handleDragEnter} onDragLeave={handleDragLeave}
+                           onDrop={handleDrop}>
+                <DropZoneTitle>
+                    {
+                        fileName ? <SuccessTitle>{fileName} <br/>Успішно завантажено <br/> <strong
+                            style={{textDecoration: "underline"}}>натисніть показати
+                            таблицю</strong></SuccessTitle> : 'Перетягніть сюди файл'
+                    }
+                </DropZoneTitle>
+                <UploadInput handleFile={handleFile}/>
+            </UploadWrapper>
+        </Container>
     )
 }
