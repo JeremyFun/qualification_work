@@ -1,11 +1,19 @@
 import express from "express";
-import {tableLoadGetData, tableLoadPostData} from "../controllers/tableLoadControllers.js";
+import {
+    currentTableLoadData,
+    tableLoadDeleteData,
+    tableLoadGetData,
+    tableLoadPostData
+} from "../controllers/tableLoadControllers.js";
 import {protect} from "../middleware/authMiddleware.js";
 
 const router = express.Router()
 
 router.route('/')
     .post(protect, tableLoadPostData)
-    .get(tableLoadGetData)
+    .get(protect, tableLoadGetData)
+router.route('/:id')
+    .delete(protect, tableLoadDeleteData)
+    .get(protect, currentTableLoadData)
 
 export default router

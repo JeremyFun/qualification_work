@@ -38,24 +38,28 @@ export const Header = () => {
             <Navbar.Collapse id="responsive-navbar-nav">
                 {userInfo ? <>
                     <Nav className="mr-auto">
-                            <LinkContainer to='/'>
-                                <Nav.Link>
-                                    Загрузка файла XLSX <i className="fas fa-file-download"></i>
-                                </Nav.Link>
-                            </LinkContainer>
+                        <LinkContainer to='/'>
+                            <Nav.Link>
+                                Завантажити файл XLSX <i className="fas fa-file-download"></i>
+                            </Nav.Link>
+                        </LinkContainer>
                         <LinkContainer to='/table'>
                             <Nav.Link>
-                                Показать таблицу <i className="fas fa-table"></i>
+                                Показати таблицю <i className="fas fa-table"></i>
                             </Nav.Link>
                         </LinkContainer>
                         <Nav.Link onClick={exportFile}>
-                            Експортировать таблицу <i className="fas fa-file-export"></i>
+                            Експортувати таблицю <i className="fas fa-file-export"></i>
                         </Nav.Link>
                     </Nav>
                     <Nav>
                         <NavDropdown title={userInfo.name} style={{marginRight: "4.5rem"}}>
                             <LinkContainer
-                                to='/profile'><NavDropdown.Item>Profile</NavDropdown.Item></LinkContainer>
+                                to='/profile'><NavDropdown.Item>Профіль</NavDropdown.Item>
+                            </LinkContainer>
+                            <LinkContainer
+                                to='/change'><NavDropdown.Item>Зміна версій</NavDropdown.Item>
+                            </LinkContainer>
                             <NavDropdown.Divider/>
                             <NavDropdown.Item onClick={logoutHandler}>Вихід <i
                                 className="fas fa-sign-out-alt"></i></NavDropdown.Item>

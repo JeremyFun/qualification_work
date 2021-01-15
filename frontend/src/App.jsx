@@ -6,9 +6,10 @@ import {Header} from "./components/Header";
 import {DropZone} from "./components/DropZone";
 import RegisterPage from "./components/pages/RegisterPage";
 import LoginPage from "./components/pages/LoginPage";
-import "./bootstrap.min.css"
 import TableLoad from "./components/TableLoad";
 import ProfilePage from "./components/pages/ProfilePage";
+import ChangeVersionTable from "./components/pages/ChangeVersionTable";
+import "./bootstrap.min.css"
 
 
 
@@ -20,9 +21,11 @@ function App() {
                         <Switch>
                             <Route path="/" component={DropZone} exact/>
                             <Route path="/table" component={TableLoad} exact/>
+                            {/*<Route path="/table/:id" component={TableLoad} exact/>*/}
                             <Route path="/register" component={RegisterPage} exact />
                             <Route path="/login" component={LoginPage} exact />
                             <Route path="/profile" component={ProfilePage} exact />
+                            <Route path="/change" component={ChangeVersionTable} exact />
                         </Switch>
             </Provider>
         </Router>
