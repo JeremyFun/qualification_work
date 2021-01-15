@@ -40,11 +40,6 @@ export const register = (name, email, password) => async (dispatch) => {
             payload: data
         })
 
-        // dispatch({
-        //     type: USER_LOGIN_SUCCESS,
-        //     payload: data
-        // })
-
         localStorage.setItem('userInfo', JSON.stringify(data))
     } catch (error) {
         dispatch({
@@ -92,11 +87,11 @@ export const login = (email, password) => async (dispatch) => {
 
 export const logout = () => async (dispatch) => {
     localStorage.removeItem('userInfo')
-    localStorage.removeItem('parsedData')
+    // localStorage.removeItem('parsedData')
     dispatch({type: USER_LOGOUT})
-    dispatch({type: USER_UPDATE_PROFILE_RESET})
-    dispatch({type: USER_DETAILS_RESET})
-    dispatch({type: SET_DATA_RESET})
+    // dispatch({type: USER_UPDATE_PROFILE_RESET})
+    // dispatch({type: USER_DETAILS_RESET})
+    // dispatch({type: SET_DATA_RESET})
 }
 
 export const getUserProfile = () => async (dispatch, getState) => {

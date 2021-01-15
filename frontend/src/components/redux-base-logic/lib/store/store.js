@@ -5,6 +5,7 @@ import { logger } from '../utils/logger'
 import { dataReducer } from '../../common/reducer'
 import { composeWithDevTools } from "redux-devtools-extension";
 import {
+  currentTableDataReducer,
   loadTableReducer,
   loadTableRemoveReducer
 } from "../../../redux-components/reducers/loadTableReducer";
@@ -26,7 +27,7 @@ const rootReducer = combineReducers({
   data: dataReducer,
   loadTable: loadTableReducer,
   loadTableRemove: loadTableRemoveReducer,
-  // currentTableData: currentTableDataReducer,
+  currentTableData: currentTableDataReducer,
   userRegister: userRegisterReducer,
   userLogin: userLoginReducer,
   userDetails: userDetailsReducer,

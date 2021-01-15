@@ -7,6 +7,7 @@ import Loader from "./Loader";
 import Message from "./Message";
 import {setDataUpdate} from "./redux-base-logic/common/actions";
 import {Button, Modal} from "react-bootstrap";
+import {setCurrentTableData} from "./redux-components/actions/loadTableActions";
 
 const Styles = styled.div`
   padding: 1rem;
@@ -194,14 +195,24 @@ function Table({columns, data, updateMyData, skipPageReset}) {
     )
 }
 
-const TableLoad = () => {
+const TableLoad = ({match}) => {
     const dispatch = useDispatch()
     const columns = React.useMemo(
         () => dataColumn,
         []
     )
+    const tableId = match.params.id
+    useEffect(() => {
+        if (tableId) {
+            dispatch(setCurrentTableData(tableId))
+        }
+    }, [tableId])
+
+    // const currentTableDataStore = useSelector(state => state.currentTableData)
+    // const { currentTableData, loading: loadingCurrentTableData } = currentTableDataStore
 
     const {parsedData, loading, error} = useSelector(state => state.data)
+
     const [data, setData] = React.useState(() => parsedData)
     const [skipPageReset, setSkipPageReset] = React.useState(false)
     const [show, setShow] = useState(false)

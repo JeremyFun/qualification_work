@@ -5,7 +5,6 @@ import {getDataTableLoad} from "../redux-base-logic/common/actions";
 import Loader from "../Loader";
 import Message from "../Message";
 import {deleteDataTableLoad} from "../redux-components/actions/loadTableActions";
-import {LOAD_TABLE_REMOVE_RESET} from "../redux-components/constants/loadTableConstants";
 
 const ChangeVersionTable = ({ history }) => {
     const dispatch = useDispatch()
@@ -23,7 +22,7 @@ const ChangeVersionTable = ({ history }) => {
     }, [dispatch, successRemove])
 
     const showTableLoad = (id) => {
-        // history.push(`/table/${id}`)
+        history.push(`/table/${id}`)
     }
 
     const deleteTableLoad = (id) => {
