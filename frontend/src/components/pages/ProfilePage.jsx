@@ -5,6 +5,7 @@ import {getUserProfile, updateUserProfile} from "../redux-components/actions/use
 import Message from "../Message";
 import Loader from "../Loader";
 import FormContainer from "../FormContainer";
+import {USER_UPDATE_PROFILE_RESET} from "../redux-components/constants/userConstants";
 
 const ProfileScreen = ({history}) => {
     const [name, setName] = useState('')
@@ -33,17 +34,21 @@ const ProfileScreen = ({history}) => {
         }
     }
 
-
     useEffect(() => {
         if (!userInfo) {
             history.push('/login')
         } else {
             if (!user || !user.name || success) {
+                console.log('replace')
                 dispatch(getUserProfile('profile'))
             } else {
-                debugger
                 setName(user.name)
                 setEmail(user.email)
+            }
+        }
+        return function close() {
+            if (success) {
+                dispatch({type: USER_UPDATE_PROFILE_RESET})
             }
         }
     }, [userInfo, history, user, success])
@@ -52,14 +57,14 @@ const ProfileScreen = ({history}) => {
         <>
             {message && <Message variant='danger'>{message}</Message>}
             {error && <Message variant='danger'>{error}</Message>}
-            {success && <Message variant='success'>Profile Updated</Message>}
+            {success && <Message variant='success'>Профіль обновлено</Message>}
             {loading ? <Loader/> :
                 (
                     <FormContainer>
-                        <h2>User profile</h2>
+                        <h2>Профіль користувача</h2>
                         <Form onSubmit={submitHandler}>
                             <Form.Group controlId='name'>
-                                <Form.Label>Name</Form.Label>
+                                <Form.Label>Ім'я</Form.Label>
                                 <Form.Control
                                     type='name'
                                     placeholder='Enter name'
@@ -69,7 +74,7 @@ const ProfileScreen = ({history}) => {
                             </Form.Group>
 
                             <Form.Group controlId='email'>
-                                <Form.Label>Email Address</Form.Label>
+                                <Form.Label>Емейл адреса</Form.Label>
                                 <Form.Control
                                     type='email'
                                     placeholder='Enter email'
@@ -79,7 +84,7 @@ const ProfileScreen = ({history}) => {
                             </Form.Group>
 
                             <Form.Group controlId='password'>
-                                <Form.Label>Password</Form.Label>
+                                <Form.Label>Пароль</Form.Label>
                                 <Form.Control
                                     type='password'
                                     placeholder='Enter password'
@@ -89,7 +94,7 @@ const ProfileScreen = ({history}) => {
                             </Form.Group>
 
                             <Form.Group controlId='confirmPassword'>
-                                <Form.Label>Confirm password</Form.Label>
+                                <Form.Label>Підтвердіть пароль</Form.Label>
                                 <Form.Control
                                     type='password'
                                     placeholder='Enter confirmPassword'
@@ -99,7 +104,7 @@ const ProfileScreen = ({history}) => {
                             </Form.Group>
 
                             <Button type='submit' variant='primary'>
-                                UPDATE
+                                Обновити
                             </Button>
                         </Form>
                     </FormContainer>

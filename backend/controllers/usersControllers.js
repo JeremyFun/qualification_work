@@ -109,6 +109,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 // @access   Private/Admin
 const getAllUsers = asyncHandler(async (req, res) => {
     const users = await User.find({})
+    console.log(users)
     res.json(users)
 })
 

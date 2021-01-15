@@ -4,7 +4,10 @@ import thunk from "redux-thunk";
 import { logger } from '../utils/logger'
 import { dataReducer } from '../../common/reducer'
 import { composeWithDevTools } from "redux-devtools-extension";
-import { loadTableReducer } from "../../../redux-components/reducers/loadTableReducer";
+import {
+  loadTableReducer,
+  loadTableRemoveReducer
+} from "../../../redux-components/reducers/loadTableReducer";
 import {
   userDetailsReducer,
   userLoginReducer,
@@ -22,6 +25,8 @@ const dataTableFromStorage = localStorage.getItem('parsedData')
 const rootReducer = combineReducers({
   data: dataReducer,
   loadTable: loadTableReducer,
+  loadTableRemove: loadTableRemoveReducer,
+  // currentTableData: currentTableDataReducer,
   userRegister: userRegisterReducer,
   userLogin: userLoginReducer,
   userDetails: userDetailsReducer,
