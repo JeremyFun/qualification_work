@@ -195,32 +195,16 @@ function Table({columns, data, updateMyData, skipPageReset}) {
     )
 }
 
-const TableLoad = ({match}) => {
-    const tableId = match.params.id
-    const {parsedData, loading, error} = useSelector(state => state.data)
-    const {currentTableData} = useSelector(state => state.currentTableData)
-    useEffect(() => {
-        if(tableId && currentTableData === parsedData) {
-            dispatch(setCurrentTableData(tableId))
-        }
-    }, [tableId])
-
+const TableLoad = ({ parsedData, tableId, show, handleShow, handleClose }) => {
     const dispatch = useDispatch()
-
     const columns = React.useMemo(
         () => dataColumn,
         []
     )
 
     const [data, setData] = React.useState(() => parsedData)
-    const [skipPageReset, setSkipPageReset] = React.useState(false)
-    const [show, setShow] = useState(false)
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-    //
     const updateMyData = (rowIndex, columnId, value) => {
-        setSkipPageReset(true)
         setData(old =>
             old.map((row, index) => {
                 if (index === rowIndex) {
@@ -233,18 +217,14 @@ const TableLoad = ({match}) => {
             })
         )
     }
+
     const saveDataTable = () => {
         dispatch(setDataUpdate(data))
         handleClose()
     }
 
-    useEffect(() => {
-        setSkipPageReset(false)
-    }, [data])
     return (
         <Styles>
-            {loading ? <Loader/> : error ? <Message variant="danger">{error}</Message> : parsedData ? (
-                <>
                 {
                     tableId && <LinkContainer to={`/change`}>
                         <Button variant="light" cl>GO back</Button>
@@ -254,7 +234,6 @@ const TableLoad = ({match}) => {
                         columns={columns}
                         data={data}
                         updateMyData={updateMyData}
-                        skipPageReset={skipPageReset}
                     />
                     <Button
                         variant="secondary"
@@ -279,8 +258,6 @@ const TableLoad = ({match}) => {
                             </Button>
                         </Modal.Footer>
                     </Modal>
-                </>
-            ) : <Loader/>}
         </Styles>
     )
 }

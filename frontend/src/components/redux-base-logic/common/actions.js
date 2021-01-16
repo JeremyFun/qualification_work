@@ -1,5 +1,6 @@
 import * as actions from './constants'
 import axios from "axios";
+import {CURRENT_TABLE_DATA_SUCCESS} from "../../redux-components/constants/loadTableConstants";
 
 export const setData = (payload) => async (dispatch, getState) => {
     try {
@@ -25,6 +26,8 @@ export const setData = (payload) => async (dispatch, getState) => {
         if (success) {
             localStorage.setItem('parsedData', JSON.stringify(dataObject))
             dispatch({type: actions.SET_DATA_SUCCESS, payload: dataObject})
+            dispatch({type: CURRENT_TABLE_DATA_SUCCESS, payload: dataObject})
+
         }
     } catch (error) {
         dispatch({
@@ -54,6 +57,7 @@ export const setDataUpdate = (payload) => async (dispatch, getState) => {
         if (success) {
             localStorage.setItem('parsedData', JSON.stringify(payload))
             dispatch({type: actions.SET_DATA_SUCCESS, payload})
+            dispatch({type: CURRENT_TABLE_DATA_SUCCESS, payload})
         }
     } catch (error) {
         dispatch({
