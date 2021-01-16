@@ -33,7 +33,7 @@ export const loadTableRemoveReducer = (state = {}, action) => {
     }
 }
 
-export const currentTableDataReducer = (state = {}, action) => {
+export const currentTableDataReducer = (state = {currentTableData: []}, action) => {
     switch (action.type) {
         case CURRENT_TABLE_DATA_REQUEST:
             return { loading: true }

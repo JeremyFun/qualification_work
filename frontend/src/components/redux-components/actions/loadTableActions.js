@@ -44,10 +44,9 @@ export const setCurrentTableData = (id) => async (dispatch, getState) => {
                 'Authorization': `Bearer ${userInfo.token}`
             }
         }
-        const {data} = await axios.get(`/api/table/${id}`, config)
-        debugger;
+        const {data: {data}} = await axios.get(`/api/table/${id}`, config)
+        dispatch({type: SET_DATA_SUCCESS, payload: data})
         dispatch({type: CURRENT_TABLE_DATA_SUCCESS, payload: data})
-        dispatch({type: SET_DATA_SUCCESS, payload: data.data})
     } catch (error) {
         dispatch({
             type: CURRENT_TABLE_DATA_FAIL,

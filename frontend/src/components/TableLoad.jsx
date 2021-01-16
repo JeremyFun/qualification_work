@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
 import {useTable, usePagination} from 'react-table'
+import {LinkContainer} from "react-router-bootstrap"
 import {dataColumn} from "../data/data";
 import {useDispatch, useSelector} from "react-redux";
 import Loader from "./Loader";
@@ -76,7 +77,6 @@ const defaultColumn = {
 }
 
 function Table({columns, data, updateMyData, skipPageReset}) {
-
     const {
         getTableProps,
         getTableBodyProps,
@@ -196,22 +196,21 @@ function Table({columns, data, updateMyData, skipPageReset}) {
 }
 
 const TableLoad = ({match}) => {
-    const dispatch = useDispatch()
-    const columns = React.useMemo(
-        () => dataColumn,
-        []
-    )
     const tableId = match.params.id
+    const {parsedData, loading, error} = useSelector(state => state.data)
+    const {currentTableData} = useSelector(state => state.currentTableData)
     useEffect(() => {
-        if (tableId) {
+        if(tableId && currentTableData === parsedData) {
             dispatch(setCurrentTableData(tableId))
         }
     }, [tableId])
 
-    // const currentTableDataStore = useSelector(state => state.currentTableData)
-    // const { currentTableData, loading: loadingCurrentTableData } = currentTableDataStore
+    const dispatch = useDispatch()
 
-    const {parsedData, loading, error} = useSelector(state => state.data)
+    const columns = React.useMemo(
+        () => dataColumn,
+        []
+    )
 
     const [data, setData] = React.useState(() => parsedData)
     const [skipPageReset, setSkipPageReset] = React.useState(false)
@@ -219,7 +218,7 @@ const TableLoad = ({match}) => {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
+    //
     const updateMyData = (rowIndex, columnId, value) => {
         setSkipPageReset(true)
         setData(old =>
@@ -234,7 +233,6 @@ const TableLoad = ({match}) => {
             })
         )
     }
-
     const saveDataTable = () => {
         dispatch(setDataUpdate(data))
         handleClose()
@@ -247,6 +245,11 @@ const TableLoad = ({match}) => {
         <Styles>
             {loading ? <Loader/> : error ? <Message variant="danger">{error}</Message> : parsedData ? (
                 <>
+                {
+                    tableId && <LinkContainer to={`/change`}>
+                        <Button variant="light" cl>GO back</Button>
+                    </LinkContainer>
+                }
                     <Table
                         columns={columns}
                         data={data}
