@@ -6,7 +6,6 @@ import TableLoad from "../models/tableLoadModel.js";
 // @access   Public
 const tableLoadPostData = asyncHandler(async (req, res) => {
     const data = req.body
-    console.log(req.user._id, 'id')
     const dataTable = await TableLoad.create({
         data,
         user: req.user._id

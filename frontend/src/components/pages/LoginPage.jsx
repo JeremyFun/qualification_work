@@ -2,16 +2,15 @@ import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import { Form, Button, Row, Col } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
-import Message from "../Message";
-import Loader from "../Loader";
-import FormContainer from "../FormContainer";
-import {login} from "../redux-components/actions/userActions";
+import Message from "../Message"
+import Loader from "../Loader"
+import FormContainer from "../FormContainer"
+import { login } from "../redux-components/actions/userActions"
 
-const LoginPage = ({location, history}) => {
+const LoginPage = ({ history }) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    // const redirect = location.search ? location.search.split('=')[1] : '/'
     const redirect = '/'
 
     const dispatch = useDispatch()

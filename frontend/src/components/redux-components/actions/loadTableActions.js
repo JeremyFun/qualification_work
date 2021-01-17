@@ -1,15 +1,15 @@
-
-import axios from "axios";
+import axios from "axios"
 import {
     CURRENT_TABLE_DATA_FAIL,
-    CURRENT_TABLE_DATA_REQUEST, CURRENT_TABLE_DATA_SUCCESS, EXPORT_TABLE_DATA_REQUEST, EXPORT_TABLE_DATA_SUCCESS,
-    // CURRENT_TABLE_DATA_FAIL,
-    // CURRENT_TABLE_DATA_REQUEST, CURRENT_TABLE_DATA_SUCCESS,
+    CURRENT_TABLE_DATA_REQUEST,
+    CURRENT_TABLE_DATA_SUCCESS,
+    EXPORT_TABLE_DATA_REQUEST,
+    EXPORT_TABLE_DATA_SUCCESS,
     LOAD_TABLE_REMOVE_FAIL,
     LOAD_TABLE_REMOVE_REQUEST,
     LOAD_TABLE_REMOVE_SUCCESS
-} from "../constants/loadTableConstants";
-import {SET_DATA_SUCCESS} from "../../redux-base-logic/common/constants";
+} from "../constants/loadTableConstants"
+import {SET_DATA_SUCCESS} from "../../redux-base-logic/common/constants"
 
 export const deleteDataTableLoad = (id) => async (dispatch, getState) => {
     try {

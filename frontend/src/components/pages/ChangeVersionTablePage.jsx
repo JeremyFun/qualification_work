@@ -1,13 +1,16 @@
-import React, {useEffect} from 'react'
-import {useDispatch, useSelector} from "react-redux";
-import {getDataTableLoad} from "../redux-base-logic/common/actions";
-import Loader from "../Loader";
-import Message from "../Message";
-import {deleteDataTableLoad} from "../redux-components/actions/loadTableActions";
-import ChangeVersionTable from "../ChangeVersionTable";
+import React, {useCallback, useEffect} from 'react'
+import { useDispatch, useSelector } from "react-redux"
+import { getDataTableLoad } from "../redux-base-logic/common/actions"
+import Loader from "../Loader"
+import Message from "../Message"
+import { deleteDataTableLoad } from "../redux-components/actions/loadTableActions"
+import ChangeVersionTable from "../ChangeVersionTable"
 
 const ChangeVersionTablePage = ({ history }) => {
     const dispatch = useDispatch()
+
+    const userLogin = useSelector(state => state.userLogin)
+    const {userInfo} = userLogin
 
     const data = useSelector(state => state.data)
     const {dataTable, loading, error} = data
@@ -19,7 +22,13 @@ const ChangeVersionTablePage = ({ history }) => {
         if (!dataTable || successRemove) {
             dispatch(getDataTableLoad())
         }
-    }, [dispatch, successRemove])
+    }, [dispatch, successRemove, dataTable])
+
+    useCallback(() => {
+        if(!userInfo) {
+            history.push('/login')
+        }
+    }, [history, userInfo])
 
     const showTableLoad = (id) => {
         history.push(`/table/${id}`)

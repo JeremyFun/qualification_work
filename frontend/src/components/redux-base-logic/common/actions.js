@@ -1,15 +1,14 @@
 import * as actions from './constants'
-import axios from "axios";
+import axios from "axios"
 import {
     CURRENT_TABLE_DATA_SUCCESS,
     EXPORT_TABLE_DATA_SUCCESS
-} from "../../redux-components/constants/loadTableConstants";
-import {inMassive, withMassive} from "../../utils/utils";
+} from "../../redux-components/constants/loadTableConstants"
+import { inMassive, withMassive } from "../../utils/utils"
 
 export const setData = (payload) => async (dispatch, getState) => {
     try {
         dispatch({type: actions.SET_DATA_REQUEST})
-        console.log(payload, 'изначальное состояние')
         const dataObject = withMassive(payload)
 
         const { userLogin: { userInfo } } = getState()

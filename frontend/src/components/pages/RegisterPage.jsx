@@ -2,10 +2,10 @@ import React, {useState, useEffect} from "react"
 import {Link} from "react-router-dom"
 import {Form, Button, Row, Col} from "react-bootstrap"
 import {useDispatch, useSelector} from "react-redux"
-import FormContainer from "../FormContainer";
-import Message from "../Message";
-import Loader from "../Loader";
-import {register} from "../redux-components/actions/userActions";
+import FormContainer from "../FormContainer"
+import Message from "../Message"
+import Loader from "../Loader"
+import {register} from "../redux-components/actions/userActions"
 
 const RegisterScreen = ({location, history}) => {
     const [name, setName] = useState('')

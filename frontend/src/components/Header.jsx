@@ -9,7 +9,7 @@ import {logout} from "./redux-components/actions/userActions";
 
 export const Header = () => {
     const exportTable = useSelector(state => state.exportTable)
-    const { exportTableData } = exportTable
+    const {exportTableData} = exportTable
     const dispatch = useDispatch()
 
     const exportFile = () => {
@@ -32,18 +32,18 @@ export const Header = () => {
     }
     return (
         <Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
-            <Navbar.Brand href="/">K№21<i className="fas fa-graduation-cap"></i>
-
+            <Navbar.Brand href="/">K№21
+                <i className="fas fa-graduation-cap"></i>
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
             <Navbar.Collapse id="responsive-navbar-nav">
                 {userInfo ? <>
                     <Nav className="mr-auto">
-                        <LinkContainer to='/'>
+                        {userInfo.isAdmin && <LinkContainer to='/create'>
                             <Nav.Link>
                                 Завантажити файл XLSX <i className="fas fa-file-download"></i>
                             </Nav.Link>
-                        </LinkContainer>
+                        </LinkContainer>}
                         <LinkContainer to='/table'>
                             <Nav.Link>
                                 Показати таблицю <i className="fas fa-table"></i>

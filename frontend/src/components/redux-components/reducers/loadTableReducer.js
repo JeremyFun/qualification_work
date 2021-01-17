@@ -3,7 +3,6 @@ import {
     CURRENT_TABLE_DATA_REQUEST,
     CURRENT_TABLE_DATA_RESET,
     CURRENT_TABLE_DATA_SUCCESS,
-    EXPORT_TABLE_DATA_FAIL,
     EXPORT_TABLE_DATA_REQUEST,
     EXPORT_TABLE_DATA_RESET,
     EXPORT_TABLE_DATA_SUCCESS,
@@ -62,8 +61,6 @@ export const exportTableReducer = (state = {exportTableData: []}, action) => {
             return { loading: true }
         case EXPORT_TABLE_DATA_SUCCESS:
             return { loading: false, exportTableData: action.payload }
-        case EXPORT_TABLE_DATA_FAIL:
-            return { loading: false, error: action.payload }
         case EXPORT_TABLE_DATA_RESET:
             return {}
         default:
