@@ -2,7 +2,7 @@
 import axios from "axios";
 import {
     CURRENT_TABLE_DATA_FAIL,
-    CURRENT_TABLE_DATA_REQUEST, CURRENT_TABLE_DATA_SUCCESS,
+    CURRENT_TABLE_DATA_REQUEST, CURRENT_TABLE_DATA_SUCCESS, EXPORT_TABLE_DATA_REQUEST, EXPORT_TABLE_DATA_SUCCESS,
     // CURRENT_TABLE_DATA_FAIL,
     // CURRENT_TABLE_DATA_REQUEST, CURRENT_TABLE_DATA_SUCCESS,
     LOAD_TABLE_REMOVE_FAIL,
@@ -56,4 +56,9 @@ export const setCurrentTableData = (id) => async (dispatch, getState) => {
                     : error.message
         })
     }
+}
+
+export const exportTableData = (payload) => (dispatch) => {
+        dispatch({type: EXPORT_TABLE_DATA_REQUEST})
+        dispatch({type: EXPORT_TABLE_DATA_SUCCESS, payload})
 }

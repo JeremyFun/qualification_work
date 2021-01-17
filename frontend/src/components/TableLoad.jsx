@@ -1,14 +1,12 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import {useTable, usePagination} from 'react-table'
 import {LinkContainer} from "react-router-bootstrap"
 import {dataColumn} from "../data/data";
-import {useDispatch, useSelector} from "react-redux";
-import Loader from "./Loader";
-import Message from "./Message";
+import {useDispatch} from "react-redux";
 import {setDataUpdate} from "./redux-base-logic/common/actions";
 import {Button, Modal} from "react-bootstrap";
-import {setCurrentTableData} from "./redux-components/actions/loadTableActions";
+import {Link} from "react-router-dom";
 
 const Styles = styled.div`
   padding: 1rem;
@@ -133,25 +131,25 @@ function Table({columns, data, updateMyData, skipPageReset}) {
                 <div>
                     <ul className="pagination">
                         <li className="page-item" onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-                            <a className="page-link" href="#">
+                            <Link className="page-link" to="#">
                                 <i className="fas fa-angle-double-left"></i>
-                            </a>
+                            </Link>
                         </li>
                         <li className="page-item" onClick={() => previousPage()} disabled={!canPreviousPage}>
-                            <a className="page-link" href="#">
+                            <Link className="page-link" to="#">
                                 <i className="fas fa-arrow-left"></i>
-                            </a>
+                            </Link>
                         </li>
                         <li className="page-item" onClick={() => nextPage()} disabled={!canNextPage}>
-                            <a className="page-link" href="#">
+                            <Link className="page-link" to="#">
                                 <i className="fas fa-arrow-right"></i>
-                            </a>
+                            </Link>
                         </li>
                         <li className="page-item">
-                            <a className="page-link" href="#" onClick={() => gotoPage(pageCount - 1)}
+                            <Link className="page-link" to="#" onClick={() => gotoPage(pageCount - 1)}
                                disabled={!canNextPage}>
                                 <i className="fas fa-angle-double-right"></i>
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                 </div>
@@ -226,9 +224,9 @@ const TableLoad = ({ parsedData, tableId, show, handleShow, handleClose }) => {
     return (
         <Styles>
                 {
-                    tableId && <LinkContainer to={`/change`}>
-                        <Button variant="light" cl>GO back</Button>
-                    </LinkContainer>
+                    tableId && ( <LinkContainer to={`/change`}>
+                        <Button variant="light" className="mb-3 text-secondary font-weight-bold">GO BACK</Button>
+                    </LinkContainer> )
                 }
                     <Table
                         columns={columns}

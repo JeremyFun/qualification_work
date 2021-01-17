@@ -8,12 +8,13 @@ import {logout} from "./redux-components/actions/userActions";
 
 
 export const Header = () => {
-    const data = useSelector(state => state.data.parsedData)
+    const exportTable = useSelector(state => state.exportTable)
+    const { exportTableData } = exportTable
     const dispatch = useDispatch()
 
     const exportFile = () => {
-        if (data.length) {
-            const ws = XLSX.utils.aoa_to_sheet(data)
+        if (exportTableData.length > 0) {
+            const ws = XLSX.utils.aoa_to_sheet(exportTableData)
             const wb = XLSX.utils.book_new()
             XLSX.utils.book_append_sheet(wb, ws, "SheetJS");
             XLSX.writeFile(wb, "sheetjs.xlsx")

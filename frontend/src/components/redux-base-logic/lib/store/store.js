@@ -1,11 +1,11 @@
 import { createStore, applyMiddleware } from 'redux'
 import { combineReducers } from 'redux'
 import thunk from "redux-thunk";
-import { logger } from '../utils/logger'
+// import { logger } from '../utils/logger'
 import { dataReducer } from '../../common/reducer'
 import { composeWithDevTools } from "redux-devtools-extension";
 import {
-  currentTableDataReducer,
+  currentTableDataReducer, exportTableReducer,
   loadTableReducer,
   loadTableRemoveReducer
 } from "../../../redux-components/reducers/loadTableReducer";
@@ -28,6 +28,7 @@ const rootReducer = combineReducers({
   loadTable: loadTableReducer,
   loadTableRemove: loadTableRemoveReducer,
   currentTableData: currentTableDataReducer,
+  exportTable: exportTableReducer,
   userRegister: userRegisterReducer,
   userLogin: userLoginReducer,
   userDetails: userDetailsReducer,
@@ -41,4 +42,4 @@ const initialState = {
   data: {parsedData: dataTableFromStorage}
 }
 
-export const store = createStore(rootReducer, initialState, composeWithDevTools(applyMiddleware(logger, ...middleware)))
+export const store = createStore(rootReducer, initialState, composeWithDevTools(applyMiddleware(...middleware)))

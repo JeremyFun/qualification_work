@@ -43,7 +43,7 @@ export const DropZone = ({ history }) => {
         }
     }
 
-    const handleDragLeave = e => {
+    const handleDragLeave = (e) => {
         e.preventDefault()
         e.stopPropagation()
         setIsDragging(false)
@@ -86,7 +86,7 @@ export const DropZone = ({ history }) => {
         if(!userInfo) {
             history.push('/login')
         }
-    }, [userInfo])
+    }, [history, userInfo])
 
     return (
         <Container>

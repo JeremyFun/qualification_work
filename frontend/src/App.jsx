@@ -7,9 +7,9 @@ import {DropZone} from "./components/DropZone";
 import RegisterPage from "./components/pages/RegisterPage";
 import LoginPage from "./components/pages/LoginPage";
 import ProfilePage from "./components/pages/ProfilePage";
-import ChangeVersionTable from "./components/pages/ChangeVersionTable";
-import "./bootstrap.min.css"
 import TablePage from "./components/pages/TablePage";
+import ChangeVersionTablePage from "./components/pages/ChangeVersionTablePage";
+import "./bootstrap.min.css"
 
 
 
@@ -25,7 +25,7 @@ function App() {
                             <Route path="/register" component={RegisterPage} exact />
                             <Route path="/login" component={LoginPage} exact />
                             <Route path="/profile" component={ProfilePage} exact />
-                            <Route path="/change" component={ChangeVersionTable} exact />
+                            <Route path="/change" component={ChangeVersionTablePage} exact />
                         </Switch>
             </Provider>
         </Router>

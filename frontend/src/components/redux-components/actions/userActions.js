@@ -87,11 +87,11 @@ export const login = (email, password) => async (dispatch) => {
 
 export const logout = () => async (dispatch) => {
     localStorage.removeItem('userInfo')
-    // localStorage.removeItem('parsedData')
+    localStorage.removeItem('parsedData')
     dispatch({type: USER_LOGOUT})
-    // dispatch({type: USER_UPDATE_PROFILE_RESET})
-    // dispatch({type: USER_DETAILS_RESET})
-    // dispatch({type: SET_DATA_RESET})
+    dispatch({type: USER_UPDATE_PROFILE_RESET})
+    dispatch({type: USER_DETAILS_RESET})
+    dispatch({type: SET_DATA_RESET})
 }
 
 export const getUserProfile = () => async (dispatch, getState) => {

@@ -1,8 +1,16 @@
 import {
-    CURRENT_TABLE_DATA_FAIL, CURRENT_TABLE_DATA_REQUEST, CURRENT_TABLE_DATA_RESET,
+    CURRENT_TABLE_DATA_FAIL,
+    CURRENT_TABLE_DATA_REQUEST,
+    CURRENT_TABLE_DATA_RESET,
     CURRENT_TABLE_DATA_SUCCESS,
-    LOAD_TABLE_FAIL, LOAD_TABLE_REMOVE_FAIL,
-    LOAD_TABLE_REMOVE_REQUEST, LOAD_TABLE_REMOVE_SUCCESS,
+    EXPORT_TABLE_DATA_FAIL,
+    EXPORT_TABLE_DATA_REQUEST,
+    EXPORT_TABLE_DATA_RESET,
+    EXPORT_TABLE_DATA_SUCCESS,
+    LOAD_TABLE_FAIL,
+    LOAD_TABLE_REMOVE_FAIL,
+    LOAD_TABLE_REMOVE_REQUEST,
+    LOAD_TABLE_REMOVE_SUCCESS,
     LOAD_TABLE_REQUEST,
     LOAD_TABLE_SUCCESS
 } from "../constants/loadTableConstants"
@@ -42,6 +50,21 @@ export const currentTableDataReducer = (state = {currentTableData: []}, action) 
         case CURRENT_TABLE_DATA_FAIL:
             return { loading: false, error: action.payload }
         case CURRENT_TABLE_DATA_RESET:
+            return {}
+        default:
+            return state
+    }
+}
+
+export const exportTableReducer = (state = {exportTableData: []}, action) => {
+    switch (action.type) {
+        case EXPORT_TABLE_DATA_REQUEST:
+            return { loading: true }
+        case EXPORT_TABLE_DATA_SUCCESS:
+            return { loading: false, exportTableData: action.payload }
+        case EXPORT_TABLE_DATA_FAIL:
+            return { loading: false, error: action.payload }
+        case EXPORT_TABLE_DATA_RESET:
             return {}
         default:
             return state

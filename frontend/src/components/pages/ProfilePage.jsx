@@ -51,7 +51,7 @@ const ProfileScreen = ({history}) => {
                 dispatch({type: USER_UPDATE_PROFILE_RESET})
             }
         }
-    }, [userInfo, history, user, success])
+    }, [dispatch, userInfo, history, user, success])
 
     return (
         <>

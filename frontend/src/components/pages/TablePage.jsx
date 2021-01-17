@@ -1,7 +1,6 @@
-import React, {useEffect, useMemo, useState} from 'react'
+import React, { useMemo, useState} from 'react'
 import {useDispatch, useSelector} from "react-redux";
 import {setCurrentTableData} from "../redux-components/actions/loadTableActions";
-import {setDataUpdate} from "../redux-base-logic/common/actions";
 import Loader from "../Loader";
 import Message from "../Message";
 import TableLoad from "../TableLoad";

@@ -1,18 +1,16 @@
 import * as actions from './constants'
 import axios from "axios";
-import {CURRENT_TABLE_DATA_SUCCESS} from "../../redux-components/constants/loadTableConstants";
+import {
+    CURRENT_TABLE_DATA_SUCCESS,
+    EXPORT_TABLE_DATA_SUCCESS
+} from "../../redux-components/constants/loadTableConstants";
+import {inMassive, withMassive} from "../../utils/utils";
 
 export const setData = (payload) => async (dispatch, getState) => {
     try {
         dispatch({type: actions.SET_DATA_REQUEST})
-        const dataObject = []
-        if (payload.length > 0) {
-            payload.slice(1).map(el => {
-                if (el.length > 0 && el.length < 85) {
-                    dataObject.push({...el})
-                }
-            })
-        }
+        console.log(payload, 'изначальное состояние')
+        const dataObject = withMassive(payload)
 
         const { userLogin: { userInfo } } = getState()
         const config = {
@@ -27,6 +25,7 @@ export const setData = (payload) => async (dispatch, getState) => {
             localStorage.setItem('parsedData', JSON.stringify(dataObject))
             dispatch({type: actions.SET_DATA_SUCCESS, payload: dataObject})
             dispatch({type: CURRENT_TABLE_DATA_SUCCESS, payload: dataObject})
+            dispatch({type: EXPORT_TABLE_DATA_SUCCESS, payload: inMassive(dataObject)})
 
         }
     } catch (error) {
@@ -58,6 +57,7 @@ export const setDataUpdate = (payload) => async (dispatch, getState) => {
             localStorage.setItem('parsedData', JSON.stringify(payload))
             dispatch({type: actions.SET_DATA_SUCCESS, payload})
             dispatch({type: CURRENT_TABLE_DATA_SUCCESS, payload})
+            dispatch({type: EXPORT_TABLE_DATA_SUCCESS, payload: inMassive(payload)})
         }
     } catch (error) {
         dispatch({

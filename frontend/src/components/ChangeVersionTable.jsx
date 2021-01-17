@@ -1,35 +1,9 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import {Button, Col, Row, Table} from "react-bootstrap";
-import {useDispatch, useSelector} from "react-redux";
-import {getDataTableLoad} from "../redux-base-logic/common/actions";
-import Loader from "../Loader";
-import Message from "../Message";
-import {deleteDataTableLoad} from "../redux-components/actions/loadTableActions";
 
-const ChangeVersionTable = ({ history }) => {
-    const dispatch = useDispatch()
 
-    const data = useSelector(state => state.data)
-    const {dataTable, loading, error} = data
-
-    const loadTableRemove = useSelector(state => state.loadTableRemove)
-    const {loading: loadingRemove, success: successRemove} = loadTableRemove
-
-    useEffect(() => {
-        if (!dataTable || successRemove) {
-            dispatch(getDataTableLoad())
-        }
-    }, [dispatch, successRemove])
-
-    const showTableLoad = (id) => {
-        history.push(`/table/${id}`)
-    }
-
-    const deleteTableLoad = (id) => {
-        dispatch(deleteDataTableLoad(id))
-    }
-
-    return loading || loadingRemove ? <Loader/> : error ? <Message variant="danger">{error}</Message> : dataTable ? (
+const ChangeVersionTable = ({dataTable, showTableLoad, deleteTableLoad}) => {
+    return (
         <Row className="justify-content-md-center">
             <Col md={8}>
                 <h2 className="text-center mb-3 mt-3">Перегляд змін в таблиці!</h2>
@@ -58,7 +32,7 @@ const ChangeVersionTable = ({ history }) => {
                 </Table>
             </Col>
         </Row>
-    ) : ""
+    )
 }
 
 export default ChangeVersionTable
